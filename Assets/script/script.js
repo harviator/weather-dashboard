@@ -40,5 +40,12 @@ Notes:
         -Humidity
         -Wnd spd
         -UV index (color coded)
-3. 
+3. 5 Day forecast:
+    -Date
+    -Icon representing wx conditions
+    -Temp
+    -Wind spd
+    -Humidity
+4. City Search History
+    -When clicked gets the wx again
 */
