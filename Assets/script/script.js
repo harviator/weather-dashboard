@@ -1,16 +1,18 @@
 //OpenWeather API KEY: aef0b3e494e18420468bba6b1a3ed89b
-
 var openWxAPIKey = "aef0b3e494e18420468bba6b1a3ed89b";
-
-//Variable to collect user input for the city name and store it
-var city;
-
-//city = 'Toronto';
-
-
+//Search Button
+var searchBtn = document.getElementById('searchBtn');
 
 //Function to get wx
-function getWx() {
+function getWx(event) {
+
+    //Prevents the page from reloading when the submit button is clicked
+    event.preventDefault();
+
+    //Variable to collect user input for the city name and store it
+    var city = document.getElementById('search').value;
+
+    console.log(city);
 
     //Variable for search query
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${openWxAPIKey}`;
@@ -25,8 +27,8 @@ function getWx() {
         });
 }
 
-getWx();
 
+searchBtn.addEventListener('click', getWx);
 
 /*
 Notes:
