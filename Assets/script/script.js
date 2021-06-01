@@ -2,12 +2,8 @@
 var openWxAPIKey = "aef0b3e494e18420468bba6b1a3ed89b";
 //Search Button
 var searchBtn = document.getElementById('searchBtn');
-//Cities array
-//var cities = [];
 //Search History
 var searchHistory = JSON.parse(localStorage.getItem("cities")) || [];
-
-console.log(searchHistory);
 
 //Function to get wx
 function getWx(event, myCity) {
@@ -18,14 +14,17 @@ function getWx(event, myCity) {
     //Variable to collect user input for the city name and store it
     var city = myCity || document.getElementById('search').value;
 
-    console.log(city);
+    // Check if the searchHistory array already contains the city
+    if (searchHistory.includes(city)) {
 
-    searchHistory.push(city);
+        city = myCity || document.getElementById('search').value;
 
-    console.log(searchHistory);
+    } else {
 
-    // check first if the searchHistory array already contains the city!
-    localStorage.setItem("cities", JSON.stringify(searchHistory));
+        searchHistory.push(city);
+        localStorage.setItem("cities", JSON.stringify(searchHistory));
+
+    }
 
     document.getElementById('search').value = '';
 
@@ -66,13 +65,15 @@ function displayHistory() {
 displayHistory();
 
 
+
+
 searchBtn.addEventListener('click', getWx);
 
 
 
 /*
 Notes:
-1. Create a form input to search for city wx.
+1. Create a form input to search for city wx - Done
 2. The current api returns the current wx.  I also need the 5 day (I think they offer 7 day).
     The current wx must include:
         -The city name
