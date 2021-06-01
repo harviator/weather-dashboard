@@ -2,17 +2,32 @@
 var openWxAPIKey = "aef0b3e494e18420468bba6b1a3ed89b";
 //Search Button
 var searchBtn = document.getElementById('searchBtn');
+//Cities array
+//var cities = [];
+//Search History
+var searchHistory = JSON.parse(localStorage.getItem("cities")) || [];
+
+console.log(searchHistory);
 
 //Function to get wx
-function getWx(event) {
+function getWx(event, myCity) {
 
     //Prevents the page from reloading when the submit button is clicked
     event.preventDefault();
 
     //Variable to collect user input for the city name and store it
-    var city = document.getElementById('search').value;
+    var city = myCity || document.getElementById('search').value;
 
     console.log(city);
+
+    searchHistory.push(city);
+
+    console.log(searchHistory);
+
+    // check first if the searchHistory array already contains the city!
+    localStorage.setItem("cities", JSON.stringify(searchHistory));
+
+    document.getElementById('search').value = '';
 
     //Variable for search query
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${openWxAPIKey}`;
@@ -27,8 +42,33 @@ function getWx(event) {
         });
 }
 
+//Search History Display
+function displayHistory() {
+    for (let index = 0; index < searchHistory.length; index++) {
+        
+        var listEl = document.getElementById('history');
+        var cityList = document.createElement('li');
+        var button = document.createElement('button');
+
+        button.setAttribute('class', 'btn btn-primary btn-sm mt-1');
+        button.textContent = searchHistory[index];
+
+        listEl.append(cityList);
+        cityList.append(button);
+
+        button.addEventListener('click', function(e) {
+            getWx(e, searchHistory[index])
+        })
+        
+    }
+}
+
+displayHistory();
+
 
 searchBtn.addEventListener('click', getWx);
+
+
 
 /*
 Notes:
