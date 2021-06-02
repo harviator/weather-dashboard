@@ -12,6 +12,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Oxanium&display=swap" rel="stylesheet">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="./assets/style/style.css"/>
+        <!-- Moment.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <title>Weather Dashboard</title>
     </head>
 
@@ -51,8 +53,9 @@
                     <!-- First Row -->
                     <div class="row">
                         <div class="col-12 col-sm-12 container-fluid bg-light rounded-3">
-                            <h2>City Date Icon</h2>
-                            <p>Wx data</p>
+                            <h2 id="cityDateIcon"></h2>
+                            <img id="currentWxIcon"/>
+                            <ul id='currentWxList'></ul>
                         </div>
                     </div>
                     <!-- 2nd Row -->
@@ -100,7 +103,7 @@
                  </div> 
             </div>  
         </main>
-
+        <!-- My JS file -->
         <script src="./assets/script/script.js"></script>
     </body>
 </html>
