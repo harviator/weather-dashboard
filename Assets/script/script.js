@@ -70,6 +70,7 @@ function getWx(event, myCity) {
                 })
 
                 .then (function (parsedData) {
+                    console.log(parsedData);
 
                     var itemEl1 = document.createElement('li');
                     var itemEl2 = document.createElement('li');
@@ -91,18 +92,40 @@ function getWx(event, myCity) {
                     currentWxList.append(itemEl3);
                     currentWxList.append(itemEl4);
 
+                    for (let index = 1; index < 6; index++) {
+                        
+                        var date = parsedData.daily[index].dt;
+                        date = moment.unix(date).format("YYYY/MM/D");
+                        var icon = parsedData.daily[index].weather[0].icon;
+                        var temp = parsedData.daily[index].temp.max;
+                        var humidity = parsedData.daily[index].humidity;
+                        var wnd = Math.round(parsedData.daily[index].wind_speed * 3.6);
+
+                        var hdg = document.createElement('h3');
+                        var img = document.createElement('img');
+                        var listEl = document.createElement('ul');
+                        var liEl1 = document.createElement('li');
+                        var liEl2 = document.createElement('li');
+                        var liEl3 = document.createElement('li');
+
+                        img.setAttribute('src', 'https://openweathermap.org/img/w/' + icon + '.png');
+
+                        hdg.textContent = date;
+                        liEl1.textContent = temp;
+                        liEl2.textContent = humidity;
+                        liEl3.textContent = wnd;
+
+                        document.getElementById([index]).append(hdg);
+                        hdg.insertAdjacentElement('afterend', img);
+                        img.insertAdjacentElement('afterend', listEl);
+                        listEl.appendChild(liEl1);
+                        liEl1.insertAdjacentElement('afterend', liEl2);
+                        liEl2.insertAdjacentElement('afterend', liEl3);
+                        
+                    }
+
                 })
 
-                    var forecast5Day = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=2&units=metric&appid=${openWxAPIKey}`;
-
-                    fetch(forecast5Day)
-                        .then(function (data) {
-                            return data.json();
-                        })
-
-                        .then (function (parsedData) {
-                            console.log(parsedData);
-                        })
             //getCoords(parsedData.coords.lat,parsedData.coords.lon)
 
 
