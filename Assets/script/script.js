@@ -19,7 +19,7 @@ var currentWxList = document.getElementById('currentWxList');
 function getWx(event, myCity) {
 
     //Prevents the page from reloading when the submit button is clicked
-    //event.preventDefault();
+    event.preventDefault();
 
     //Variable to collect user input for the city name and store it
     var city = myCity || document.getElementById('search').value;
@@ -33,6 +33,8 @@ function getWx(event, myCity) {
 
         searchHistory.push(city);
         localStorage.setItem("cities", JSON.stringify(searchHistory));
+        var listEl = document.querySelector('#history').innerHTML=""
+        displayHistory();
 
     }
 
@@ -49,6 +51,9 @@ function getWx(event, myCity) {
 
         .then (function (parsedData) {
             console.log(parsedData);
+            //clear elements
+            currentWxList.innerHTML = "";
+
 
             //Icon for current wx
             var iconCrnt = parsedData.weather[0].icon;
@@ -103,6 +108,7 @@ function getWx(event, myCity) {
             
                 
         });
+
 }
 
 //getCoords(lat,lon){
@@ -113,6 +119,8 @@ function getWx(event, myCity) {
 
 //Search History Display
 function displayHistory() {
+    //
+
     for (let index = 0; index < searchHistory.length; index++) {
         
         var listEl = document.getElementById('history');
@@ -130,6 +138,7 @@ function displayHistory() {
         })
         
     }
+
 }
 
 displayHistory();
@@ -152,9 +161,9 @@ Notes:
         -The city name - Done
         -The date (probs going to need moment.js to get use unix) - Done
         -Icon representing the wx conditions - Done
-        -Temp
-        -Humidity
-        -Wnd spd
+        -Temp - Done
+        -Humidity - Done
+        -Wnd spd - Done
         -UV index (color coded)
 3. 5 Day forecast:
     -Date
