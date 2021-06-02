@@ -5,3 +5,12 @@ html, body {
 h1, h2, h3 {
     font-family: 'Oxanium', cursive;
 }
+
+ul {
+    margin: 0;
+    padding: 10px;
+}
+
+ul > li {
+    list-style-type: none;
+}
