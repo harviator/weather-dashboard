@@ -42,7 +42,6 @@ function getWx(event, myCity) {
 
     //Variable for search query
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${openWxAPIKey}`;
-    console.log(queryURL);
 
     fetch(queryURL)
         .then(function (data) {
@@ -50,10 +49,8 @@ function getWx(event, myCity) {
         })
 
         .then (function (parsedData) {
-            console.log(parsedData);
-            //clear elements
+            //Clear List Elements
             currentWxList.innerHTML = "";
-
 
             //Icon for current wx
             var iconCrnt = parsedData.weather[0].icon;
@@ -66,13 +63,13 @@ function getWx(event, myCity) {
             
             var latLongURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${openWxAPIKey}`;
 
+            //Fetch Current Wx data using lat and long to get UV Index
             fetch(latLongURL)
                 .then(function (data) {
                     return data.json();
                 })
 
                 .then (function (parsedData) {
-                    console.log(parsedData);
 
                     var itemEl1 = document.createElement('li');
                     var itemEl2 = document.createElement('li');
@@ -94,11 +91,18 @@ function getWx(event, myCity) {
                     currentWxList.append(itemEl3);
                     currentWxList.append(itemEl4);
 
-                    console.log(temp);
-
-
-
                 })
+
+                    var forecast5Day = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=2&units=metric&appid=${openWxAPIKey}`;
+
+                    fetch(forecast5Day)
+                        .then(function (data) {
+                            return data.json();
+                        })
+
+                        .then (function (parsedData) {
+                            console.log(parsedData);
+                        })
             //getCoords(parsedData.coords.lat,parsedData.coords.lon)
 
 
