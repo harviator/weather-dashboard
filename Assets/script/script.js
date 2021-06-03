@@ -61,7 +61,7 @@ function getWx(event, myCity) {
 
             var latLongURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${openWxAPIKey}`;
 
-            //Fetch Current Wx data using lat and long to get UV Index
+            //Fetch Current and Forecast Wx data using lat and long
             fetch(latLongURL)
                 .then(function (data) {
                     return data.json();
@@ -103,14 +103,14 @@ function getWx(event, myCity) {
                         span.textContent = `${uvi} - We're all going to die!`;
                     }
 
-                    //clear all first
+                    //Clear all first
                     for (let index = 1; index < 6; index++) {
+                        
                         document.getElementById([index]).innerHTML = '';
                         
                     }
 
-
-
+                    //Display the 5 Day Forecast
                     for (let index = 1; index < 6; index++) {
 
                         var date = parsedData.daily[index].dt;
