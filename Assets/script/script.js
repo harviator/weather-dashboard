@@ -12,11 +12,6 @@ var todayDate = moment().format("YYYY/MM/D");
 var currentWxIcon = document.getElementById('currentWxIcon');
 //Current Wx List
 var currentWxList = document.getElementById('currentWxList');
-//5 Day Forecast List
-var fiveDayList = document.getElementsByClassName('fiveDayList');
-
-//Can't get this work anywhere
-fiveDayList.innerHTML = "";
 
 //Function to get wx
 function getWx(event, myCity) {
