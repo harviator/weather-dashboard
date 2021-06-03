@@ -12,8 +12,11 @@ var todayDate = moment().format("YYYY/MM/D");
 var currentWxIcon = document.getElementById('currentWxIcon');
 //Current Wx List
 var currentWxList = document.getElementById('currentWxList');
+//5 Day Forecast List
+var fiveDayList = document.getElementsByClassName('fiveDayList');
 
-
+//Can't get this work anywhere
+fiveDayList.innerHTML = "";
 
 //Function to get wx
 function getWx(event, myCity) {
@@ -68,8 +71,9 @@ function getWx(event, myCity) {
                 .then(function (data) {
                     return data.json();
                 })
-
+                
                 .then (function (parsedData) {
+
                     console.log(parsedData);
 
                     var itemEl1 = document.createElement('li');
@@ -96,17 +100,17 @@ function getWx(event, myCity) {
                     itemEl4.append(span);
 
                     if (uvi <= 2) {
-                        span.setAttribute('style', 'background-color: green; border: 1px solid green; border-radius: 3px;'); //set background colour to green
+                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
                     } else if (uvi >= 3 && uvi <= 5) {
-                        //set background to Yellow
+                        span.setAttribute('style', 'background-color: #ffff99; border: 1px solid yellow; border-radius: 3px; padding: 3px;');
                     } else if (uvi >= 6 && uvi <= 7) {
-                        //set background to Orange
+                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
                     } else {
-                        //set background to green
+                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
                     }
 
                     for (let index = 1; index < 6; index++) {
-                        
+
                         var date = parsedData.daily[index].dt;
                         date = moment.unix(date).format("YYYY/MM/D");
                         var icon = parsedData.daily[index].weather[0].icon;
@@ -120,7 +124,8 @@ function getWx(event, myCity) {
                         var liEl1 = document.createElement('li');
                         var liEl2 = document.createElement('li');
                         var liEl3 = document.createElement('li');
-
+                        
+                        listEl.setAttribute('class', 'fiveDayList');
                         img.setAttribute('src', 'https://openweathermap.org/img/w/' + icon + '.png');
 
                         hdg.textContent = date;
@@ -134,7 +139,6 @@ function getWx(event, myCity) {
                         listEl.appendChild(liEl1);
                         liEl1.insertAdjacentElement('afterend', liEl2);
                         liEl2.insertAdjacentElement('afterend', liEl3);
-                        
                     }
 
                 })
@@ -188,7 +192,6 @@ displayHistory();
 // function displayCurrentWx() {
 
 // }
-
 
 
 
