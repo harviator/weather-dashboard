@@ -38,7 +38,7 @@ THEN I am again presented with current and future conditions for that city
 
 ## Screen Shot
 
-![Getting Started] (./Assets/images/screen-shot.png)
+![Getting Started](./Assets/images/screen-shot.png)
 
 ## Link
 
