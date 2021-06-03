@@ -98,15 +98,23 @@ function getWx(event, myCity) {
                     itemEl4.append(span);
 
                     if (uvi <= 2.99) {
-                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
+                        span.setAttribute('style', 'background-color: #ccff99; border: 2px solid green; border-radius: 3px; padding: 0px 3px 0px 3px;');
                     } else if (uvi >= 3.00 && uvi <= 5.00) {
-                        span.setAttribute('style', 'background-color: #ffff99; border: 1px solid yellow; border-radius: 3px; padding: 3px;');
+                        span.setAttribute('style', 'background-color: #ffff99; border: 2px solid #cccc00; border-radius: 3px; padding: 0px 3px 0px 3px;');
                     } else if (uvi >= 6.00 && uvi <= 7.00) {
-                        span.setAttribute('style', 'background-color: #ffd699; border: 1px solid orange; border-radius: 3px; padding: 3px;');
+                        span.setAttribute('style', 'background-color: #ffd699; border: 2px solid orange; border-radius: 3px; padding: 0px 3px 0px 3px;;');
                     } else {
-                        span.setAttribute('style', 'background-color: #ffad99; border: 1px solid red; border-radius: 3px; padding: 3px;');
+                        span.setAttribute('style', 'background-color: #ffad99; border: 2px solid red; border-radius: 3px; padding: 0px 3px 0px 3px;');
                         span.textContent = `${uvi} - We're all going to die!`;
                     }
+
+                    //clear all first
+                    for (let index = 1; index < 6; index++) {
+                        document.getElementById([index]).innerHTML = '';
+                        
+                    }
+
+
 
                     for (let index = 1; index < 6; index++) {
 
