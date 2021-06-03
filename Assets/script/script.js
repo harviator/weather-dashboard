@@ -36,7 +36,7 @@ function getWx(event, myCity) {
 
         searchHistory.push(city);
         localStorage.setItem("cities", JSON.stringify(searchHistory));
-        var listEl = document.querySelector('#history').innerHTML=""
+        var listEl = document.querySelector('#history').innerHTML = ""
         displayHistory();
 
     }
@@ -51,7 +51,7 @@ function getWx(event, myCity) {
             return data.json();
         })
 
-        .then (function (parsedData) {
+        .then(function (parsedData) {
             //Clear List Elements
             currentWxList.innerHTML = "";
 
@@ -63,7 +63,7 @@ function getWx(event, myCity) {
 
             var lat = parsedData.coord.lat;
             var lon = parsedData.coord.lon;
-            
+
             var latLongURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${openWxAPIKey}`;
 
             //Fetch Current Wx data using lat and long to get UV Index
@@ -71,10 +71,8 @@ function getWx(event, myCity) {
                 .then(function (data) {
                     return data.json();
                 })
-                
-                .then (function (parsedData) {
 
-                    console.log(parsedData);
+                .then(function (parsedData) {
 
                     var itemEl1 = document.createElement('li');
                     var itemEl2 = document.createElement('li');
@@ -99,20 +97,21 @@ function getWx(event, myCity) {
                     currentWxList.append(itemEl4);
                     itemEl4.append(span);
 
-                    if (uvi <= 2) {
+                    if (uvi <= 2.99) {
                         span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
-                    } else if (uvi >= 3 && uvi <= 5) {
+                    } else if (uvi >= 3.00 && uvi <= 5.00) {
                         span.setAttribute('style', 'background-color: #ffff99; border: 1px solid yellow; border-radius: 3px; padding: 3px;');
-                    } else if (uvi >= 6 && uvi <= 7) {
-                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
+                    } else if (uvi >= 6.00 && uvi <= 7.00) {
+                        span.setAttribute('style', 'background-color: #ffd699; border: 1px solid orange; border-radius: 3px; padding: 3px;');
                     } else {
-                        span.setAttribute('style', 'background-color: #ccff99; border: 1px solid green; border-radius: 3px; padding: 3px;');
+                        span.setAttribute('style', 'background-color: #ffad99; border: 1px solid red; border-radius: 3px; padding: 3px;');
+                        span.textContent = `${uvi} - We're all going to die!`;
                     }
 
                     for (let index = 1; index < 6; index++) {
 
                         var date = parsedData.daily[index].dt;
-                        date = moment.unix(date).format("YYYY/MM/D");
+                        date = moment.unix(date).format("MM/D");
                         var icon = parsedData.daily[index].weather[0].icon;
                         var temp = Math.round(parsedData.daily[index].temp.max);
                         var humidity = parsedData.daily[index].humidity;
@@ -124,7 +123,7 @@ function getWx(event, myCity) {
                         var liEl1 = document.createElement('li');
                         var liEl2 = document.createElement('li');
                         var liEl3 = document.createElement('li');
-                        
+
                         listEl.setAttribute('class', 'fiveDayList');
                         img.setAttribute('src', 'https://openweathermap.org/img/w/' + icon + '.png');
 
@@ -143,78 +142,31 @@ function getWx(event, myCity) {
 
                 })
 
-            //getCoords(parsedData.coords.lat,parsedData.coords.lon)
-
-
-            //parsedData.coords.lat
-            //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-            //fetch(latlonURL).then(data).then(parsedData)
-            
-                
         });
-
-}
-
-//getCoords(lat,lon){
-    //parsedData.coords.lat
-            //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-            //fetch(latlonURL).then(data).then(parsedData)
-//
+};
 
 //Search History Display
 function displayHistory() {
-    //
 
     for (let index = 0; index < searchHistory.length; index++) {
-        
+
         var listEl = document.getElementById('history');
         var cityList = document.createElement('li');
         var button = document.createElement('button');
 
         cityList.setAttribute('class', 'd-grid gap-2');
-        button.setAttribute('class', 'btn btn-primary btn-sm mt-1');
+        button.setAttribute('class', 'btn btn-outline-secondary btn-sm mt-1');
         button.textContent = searchHistory[index];
 
         listEl.append(cityList);
         cityList.append(button);
 
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             getWx(e, searchHistory[index])
         })
-        
     }
-
 }
 
 displayHistory();
 
-//Display Current Weather
-// function displayCurrentWx() {
-
-// }
-
-
-
 searchBtn.addEventListener('click', getWx);
-
-/*
-Notes:
-1. Create a form input to search for city wx - Done
-2. The current api returns the current wx.
-    The current wx must include:
-        -The city name - Done
-        -The date (probs going to need moment.js to get use unix) - Done
-        -Icon representing the wx conditions - Done
-        -Temp - Done
-        -Humidity - Done
-        -Wnd spd - Done
-        -UV index (color coded)
-3. 5 Day forecast:
-    -Date
-    -Icon representing wx conditions
-    -Temp
-    -Wind spd
-    -Humidity
-4. City Search History
-    -When clicked gets the wx again
-*/
