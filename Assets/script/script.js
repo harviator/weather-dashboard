@@ -76,28 +76,41 @@ function getWx(event, myCity) {
                     var itemEl2 = document.createElement('li');
                     var itemEl3 = document.createElement('li');
                     var itemEl4 = document.createElement('li');
+                    var span = document.createElement('span');
 
-                    var temp = parsedData.current.temp;
+                    var temp = Math.round(parsedData.current.temp);
                     var humidity = parsedData.current.humidity;
                     var wndspd = Math.round(parsedData.current.wind_speed * 3.6);
                     var uvi = parsedData.current.uvi;
 
-                    itemEl1.textContent = `Temp: ${temp} ºC`;
+                    itemEl1.textContent = `Temp: ${temp}ºC`;
                     itemEl2.textContent = `Humidity: ${humidity}%`;
                     itemEl3.textContent = `Wind: ${wndspd} km/h`;
-                    itemEl4.textContent = `UV Index: ${uvi}`;
+                    itemEl4.textContent = `UV Index: `;
+                    span.textContent = `${uvi}`;
 
                     currentWxList.append(itemEl1);
                     currentWxList.append(itemEl2);
                     currentWxList.append(itemEl3);
                     currentWxList.append(itemEl4);
+                    itemEl4.append(span);
+
+                    if (uvi <= 2) {
+                        span.setAttribute('style', 'background-color: green; border: 1px solid green; border-radius: 3px;'); //set background colour to green
+                    } else if (uvi >= 3 && uvi <= 5) {
+                        //set background to Yellow
+                    } else if (uvi >= 6 && uvi <= 7) {
+                        //set background to Orange
+                    } else {
+                        //set background to green
+                    }
 
                     for (let index = 1; index < 6; index++) {
                         
                         var date = parsedData.daily[index].dt;
                         date = moment.unix(date).format("YYYY/MM/D");
                         var icon = parsedData.daily[index].weather[0].icon;
-                        var temp = parsedData.daily[index].temp.max;
+                        var temp = Math.round(parsedData.daily[index].temp.max);
                         var humidity = parsedData.daily[index].humidity;
                         var wnd = Math.round(parsedData.daily[index].wind_speed * 3.6);
 
@@ -111,9 +124,9 @@ function getWx(event, myCity) {
                         img.setAttribute('src', 'https://openweathermap.org/img/w/' + icon + '.png');
 
                         hdg.textContent = date;
-                        liEl1.textContent = temp;
-                        liEl2.textContent = humidity;
-                        liEl3.textContent = wnd;
+                        liEl1.textContent = `Temp: ${temp}ºC`;
+                        liEl2.textContent = `Humidity: ${humidity}%`;
+                        liEl3.textContent = `Wind: ${wnd} km/h`;
 
                         document.getElementById([index]).append(hdg);
                         hdg.insertAdjacentElement('afterend', img);
@@ -154,6 +167,7 @@ function displayHistory() {
         var cityList = document.createElement('li');
         var button = document.createElement('button');
 
+        cityList.setAttribute('class', 'd-grid gap-2');
         button.setAttribute('class', 'btn btn-primary btn-sm mt-1');
         button.textContent = searchHistory[index];
 
